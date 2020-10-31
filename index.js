@@ -57,7 +57,6 @@ catWoman = {
    saying: cat.saying,
    friends: ['Tom', 'Felix']
 };
-
 // ======== OUTPUT ========
 /* Use print(message) for output.
 Default tag for message is <pre>. Use print(message,'div') to change containing element tag.
@@ -66,7 +65,14 @@ Message can contain HTML markup. You may also tweak index.html and/or styles.css
 However, please, REFRAIN from improving visuals at least until your code is reviewed
 so code reviewers might focus on a single file that is index.js.
 */
-
+const createStory = (character, index) => {
+   let speciesDiff;
+   if(character.paws > 0) speciesDiff = `<b>${character.paws}</b> paws`;
+   else speciesDiff = `<b>${character.legs}</b> legs and <b>${character.hands}</b> hands`;
+   return  `Wonderful creature - <b>${character.species}</b>, whose name is <b>${character.name}</b>! This <b>${index+1}th</b> member is the owner of ${speciesDiff}, usually the greeting is <i style="text-decoration:underline;"><b>${character.saying}</b></i> and friends of this inhabitant are <b>${character.friends.join(', ')}</b>.`;
+};
+   
+Array.from([man, woman, cat, dog, catWoman], (elem, index) => print(createStory(elem, index), 'p'));
 /* Print examples:
 print('ABC');
 print('<strong>ABC</strong>');
@@ -76,13 +82,3 @@ print('human; John; male; 2; 2; Hello world!; Rex, Tom, Jenny');
 print('human; <strong>John</strong>; male; 2; 2; <em>Hello world!</em>; Rex, Tom, Jenny');
 print('human; <strong>John</strong>; male; 2; 2; <em>Hello world!</em>; Rex, Tom, Jenny', 'div');
 */
-
-const createStory = (character, index) => {
-let speciesDiff;
-if(character.paws > 0) speciesDiff = `<b>${character.paws}</b> paws`;
-else speciesDiff = `<b>${character.legs}</b> legs and is <b>${character.hands}</b> hands`;
-return  `<b>Welcome</b>, wanderer, let me tell you briefly about ${index+1}th our resident - a wonderful <b>${character.species}</b> creature, the name is <b>${character.name}</b>! This member is the owner of ${speciesDiff}, usually the greeting is <i style="text-decoration:underline;"><b>${character.saying}</b></i> and friends of this inhabitant are <b>${character.friends.join(', ')}</b>.`;
-};
-
-Array.from([man, woman, cat, dog, catWoman], (obj, index) => print(createStory(obj, index), 'p'));
-
