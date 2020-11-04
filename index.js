@@ -7,56 +7,38 @@
 
 // ======== OBJECTS DEFINITIONS ========
 // Define your objects here
-const man = {
-      species: 'human',
-      name: 'Tom',
-      gender: 'male',
-      legs: 2,
-      hands: 2,
-      paws: 0,
-      saying: 'Hello Jenny!',
-      friends: ['Tom', 'Jenny', 'Rex', 'Selina']
-   },
-   woman = {
-      species: 'human',
-      name: 'Jenny',
-      gender: 'female',
-      legs: 2,
-      hands: 2,
-      paws: 0,
-      saying: 'Hello Tom!',
-      friends: ['Tom', 'Rex', 'Felix']
-   },
-   dog = {      
-      species: 'dog',
-      name: 'Rex',
-      gender: 'male',
-      legs: 0,
-      hands: 0,
-      paws: 4,
-      saying: 'woof-woof!',
-      friends: ['Tom', 'Jenny']
-   },
-   cat = {
-      species: 'cat',
-      name: 'Felix',
-      gender: 'male',
-      legs: 0,
-      hands: 0,
-      paws: 4,
-      saying: 'meow!',
-      friends: ['Tom', 'Jenny', 'Selina']
-   },
-   catWoman = {
-      species: 'human',
-      name: 'Selina',
-      gender: 'female',
-      legs: 2,
-      hands: 2,
-      paws: 0,
-      saying: cat.saying,
-      friends: ['Tom', 'Felix']
-   };
+class Resident {
+   constructor(species, name, gender, legs, hands, paws, saying, friends) {
+      this.species = species;
+      this.name = name;
+      this.gender = gender;
+      this.legs = legs; 
+      this.hands = hands;
+      this.paws = paws;
+      this.saying = saying;
+      this.friends = friends; 
+   }
+   representing() {
+      let speciesDiff;
+      if(this.paws > 0) speciesDiff = `<b>${this.paws}</b> paws`;
+      else speciesDiff = `<b>${this.legs}</b> legs and <b>${this.hands}</b> hands`;
+      return `Wonderful creature - <b>${this.species}</b>, whose name is <b>${this.name}</b>! This member is the owner of ${speciesDiff}, usually the greeting is <i style="text-decoration:underline;"><b>${this.saying}</b></i> and friends of this inhabitant are <b>${this.friends.join(', ')}</b>.`;
+   }
+}
+
+class CatWoman extends Resident {
+   constructor(species, name, gender, legs, hands, paws, saying, friends, cat) {
+      super(species, name, gender, legs, hands, paws, saying, friends);
+      this.saying = cat.saying;
+   }
+}
+
+const man = new Resident('human', 'Tom', 'male', 2, 2, 0, 'Hello Jenny!', ['Tom', 'Jenny', 'Rex', 'Selina']),
+      women = new Resident('human', 'Jenny', 'female', 2, 2, 0, 'Hello Tom!', ['Tom', 'Rex', 'Felix']),
+      dog = new Resident('dog', 'Rex', 'male', 0, 0, 4, 'woof-woof!', ['Tom', 'Jenny']),
+      cat = new Resident('cat', 'Felix', 'male', 0, 0, 4, 'meow!', ['Tom', 'Jenny', 'Selina']),
+      catWoman = new CatWoman('human', 'Selina', 'female', 2, 2, 0, cat, ['Tom', 'Felix'], cat),
+      residents = [man, women, cat, dog, catWoman];
 // ======== OUTPUT ========
 /* Use print(message) for output.
 Default tag for message is <pre>. Use print(message,'div') to change containing element tag.
@@ -65,16 +47,7 @@ Message can contain HTML markup. You may also tweak index.html and/or styles.css
 However, please, REFRAIN from improving visuals at least until your code is reviewed
 so code reviewers might focus on a single file that is index.js.
 */
-const residents = [man, woman, cat, dog, catWoman];
-
-const createStory = (character, index) => {
-   let speciesDiff;
-   if(character.paws > 0) speciesDiff = `<b>${character.paws}</b> paws`;
-   else speciesDiff = `<b>${character.legs}</b> legs and <b>${character.hands}</b> hands`;
-   return  `Wonderful creature - <b>${character.species}</b>, whose name is <b>${character.name}</b>! This <b>${index+1}th</b> member is the owner of ${speciesDiff}, usually the greeting is <i style="text-decoration:underline;"><b>${character.saying}</b></i> and friends of this inhabitant are <b>${character.friends.join(', ')}</b>.`;
-};
-
-residents.map((resident, index) => print(createStory(resident, index), 'p'));
+residents.map(resident => print(resident.representing(), 'p'));
 /* Print examples:
 print('ABC');
 print('<strong>ABC</strong>');
@@ -84,3 +57,4 @@ print('human; John; male; 2; 2; Hello world!; Rex, Tom, Jenny');
 print('human; <strong>John</strong>; male; 2; 2; <em>Hello world!</em>; Rex, Tom, Jenny');
 print('human; <strong>John</strong>; male; 2; 2; <em>Hello world!</em>; Rex, Tom, Jenny', 'div');
 */
+
